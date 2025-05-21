@@ -2,19 +2,19 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Registro</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>🔐 Login</h1>
-        <form method="POST" action="/login">
+        <h1>📝 Registro</h1>
+        <form method="POST" action="/registro">
             <input type="text" name="username" placeholder="Usuário">
             <input type="password" name="senha" placeholder="Senha">
-            <button type="submit">Entrar</button>
+            <button type="submit">Registrar</button>
         </form>
 
-        <p>Não tem conta? <a href="{{ url_for('registro') }}">Registre-se</a></p>
+        <p>Já tem conta? <a href="{{ url_for('login') }}">Faça login</a></p>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div class="flash">{{ messages[0] }}</div>

@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import os
 from functools import wraps
 
 app = Flask(__name__)
-app.secret_key = 'sua_chave_secreta_aqui'  # troque para algo seguro
+app.secret_key = 'secure_key'  # troque para algo seguro
 
 # Configuração do banco de dados SQLite
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -13,11 +14,26 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-# Modelo do banco de dados
+
+# Login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login' # Redireciona para login se não estiver logado
+
+# Modelos
 class Pedido(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     cliente = db.Column(db.String(100), nullable=False)
     sabor = db.Column(db.String(100), nullable=False)
+
+class Usuario(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(150), unique=True, nullable=False)
+    password = db.Column(db.String(150), nullable=False)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return Usuario.query.get(int(user_id))
 
 # Decorador para proteger rotas
 def login_required(f):
@@ -31,9 +47,11 @@ def login_required(f):
 
 # Rota principal
 @app.route('/')
+@login_required
 def index():
     pedidos = Pedido.query.all()
     return render_template('index.html', pedidos=pedidos)
+
 
 # Adicionar pedido
 @app.route('/adicionar', methods=['POST'])
@@ -76,24 +94,41 @@ def editar(id):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        user = request.form['username']
-        password = request.form['password']
-        if user == 'admin' and password == 'admin':
+        username = request.form.get('username')
+        senha = request.form['senha']
+        user = Usuario.query.filter_by(username=username, password=senha).first()
+        if user:
             session['logged_in'] = True
-            flash("Login realizado com sucesso!")
+            login_user(user)
+            flash("✅ Login bem-sucedido!")
             return redirect(url_for('index'))
         else:
-            flash("Usuário ou senha inválidos!")
+            flash("❌ Nome de usuário ou senha inválidos.")
     return render_template('login.html')
+
 
 # Logout
 @app.route('/logout')
 @login_required
 def logout():
-    session.pop('logged_in', None)
-    flash("Deslogado com sucesso!")
-    return redirect(url_for('index'))
+    logout_user()
+    flash("👋 Você saiu do sistema.")
+    return redirect(url_for('login'))
 
+@app.route('/registro', methods=['GET', 'POST'])
+def registro():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        senha = request.form['senha']
+        if Usuario.query.filter_by(username=username).first():
+            flash("⚠️ Nome de usuário já existe.")
+            return redirect(url_for('registro'))
+        novo_usuario = Usuario(username=username, password=senha)
+        db.session.add(novo_usuario)
+        db.session.commit()
+        flash("✅ Registro realizado com sucesso!")
+        return redirect(url_for('login'))
+    return render_template('registro.html')
 
 if __name__ == '__main__':
     with app.app_context():
