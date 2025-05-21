@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Pedidos de Pizza</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🍕 Sistema de Pedidos de Pizza</h1>
+
+        <!-- Mensagens Flash -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+
+        <form method="post" action="{{ url_for('adicionar') }}">
+            <input type="text" name="cliente" placeholder="Seu nome" required>
+            <input type="text" name="sabor" placeholder="Sabor da pizza" required>
+            <button type="submit">Fazer Pedido</button>
+        </form>
+
+        <h2>📋 Pedidos na Fila</h2>
+        <ul>
+            {% for pedido in pedidos %}
+                <li>
+                    🔹 Pedido {{ pedido.id }}: {{ pedido.cliente }} - {{ pedido.sabor }}
+                    <a href="{{ url_for('entregar', id=pedido.id) }}" class="btn entregar">✅ Entregar</a>
+                    <a href="{{ url_for('editar', id=pedido.id) }}" class="btn editar">✏️ Editar</a>
+                </li>
+            {% else %}
+                <li>📭 Nenhum pedido na fila!</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
