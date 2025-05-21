@@ -9,30 +9,44 @@
     <div class="container">
         <h1>🍕 Sistema de Pedidos de Pizza</h1>
 
-        <!-- Mensagens Flash -->
         {% with messages = get_flashed_messages() %}
-        {% if messages %}
+          {% if messages %}
             <div class="flash">
-            {% for message in messages %}
+              {% for message in messages %}
                 <p>{{ message }}</p>
-            {% endfor %}
+              {% endfor %}
             </div>
-        {% endif %}
+          {% endif %}
         {% endwith %}
 
         <form method="post" action="{{ url_for('adicionar') }}">
             <input type="text" name="cliente" placeholder="Seu nome" required>
-            <input type="text" name="sabor" placeholder="Sabor da pizza" required>
+            <select name="sabor" required>
+                <option value="" disabled selected>Escolha o sabor</option>
+                <option value="Calabresa">Calabresa</option>
+                <option value="Quatro Queijos">Quatro Queijos</option>
+                <option value="Frango com Catupiry">Frango com Catupiry</option>
+            </select>
             <button type="submit">Fazer Pedido</button>
         </form>
 
         <h2>📋 Pedidos na Fila</h2>
+
+        {% if session.get('logged_in') %}
+          <p><a href="{{ url_for('logout') }}">Logout</a></p>
+        {% else %}
+          <p><a href="{{ url_for('login') }}">Login</a> (admin/admin)</p>
+        {% endif %}
+
         <ul>
             {% for pedido in pedidos %}
                 <li>
                     🔹 Pedido {{ pedido.id }}: {{ pedido.cliente }} - {{ pedido.sabor }}
-                    <a href="{{ url_for('entregar', id=pedido.id) }}" class="btn entregar">✅ Entregar</a>
-                    <a href="{{ url_for('editar', id=pedido.id) }}" class="btn editar">✏️ Editar</a>
+
+                    {% if session.get('logged_in') %}
+                    — <a href="{{ url_for('editar', id=pedido.id) }}">✏️ Editar</a>
+                    — <a href="{{ url_for('entregar', id=pedido.id) }}">✅ Entregar</a>
+                    {% endif %}
                 </li>
             {% else %}
                 <li>📭 Nenhum pedido na fila!</li>

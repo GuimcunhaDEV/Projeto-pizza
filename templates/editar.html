@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Editar Pedido</title>
+    <title>Editar Pedido #{{ pedido.id }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
         <h1>✏️ Editar Pedido #{{ pedido.id }}</h1>
 
-        <!-- Mensagens Flash -->
         {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div class="flash">
@@ -22,7 +21,11 @@
 
         <form method="post">
             <label>Novo sabor:</label>
-            <input type="text" name="sabor" value="{{ pedido.sabor }}" required>
+            <select name="sabor" required>
+                <option value="Calabresa" {% if pedido.sabor == 'Calabresa' %}selected{% endif %}>Calabresa</option>
+                <option value="Quatro Queijos" {% if pedido.sabor == 'Quatro Queijos' %}selected{% endif %}>Quatro Queijos</option>
+                <option value="Frango com Catupiry" {% if pedido.sabor == 'Frango com Catupiry' %}selected{% endif %}>Frango com Catupiry</option>
+            </select>
             <button type="submit">Salvar</button>
             <a href="{{ url_for('index') }}">Cancelar</a>
         </form>
