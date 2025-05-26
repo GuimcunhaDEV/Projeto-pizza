@@ -3,7 +3,7 @@
 
 ##  Descrição do Projeto
 
-Este projeto é um sistema web simples desenvolvido com Flask para gerenciamento de pedidos de pizza. Ele permite adicionar, listar, editar e remover pedidos de clientes, com armazenamento em banco de dados SQLite.
+Este projeto consiste no desenvolvimento de um sistema web simples, implementado com o framework Flask, destinado ao gerenciamento de pedidos de pizza. A aplicação possibilita a realização das principais operações de CRUD (Create, Read, Update, Delete), permitindo que o usuário adicione, visualize, edite e exclua pedidos realizados por clientes. Para o armazenamento dos dados, utiliza-se um banco de dados relacional SQLite, proporcionando uma solução leve e eficaz para o controle das informações.
 
 ---
 
