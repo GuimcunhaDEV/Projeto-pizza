@@ -12,7 +12,6 @@ Este projeto consiste no desenvolvimento de um sistema web simples, implementado
 ### Pré-requisitos
 
 - Python 3 instalado
-- Bibliotecas Flask e SQLAlchemy
 
 ### Instalação
 
