@@ -21,6 +21,14 @@ Este projeto consiste no desenvolvimento de um sistema web simples, implementado
 3. Instale os requisitos:
 
 ```bash
+pip install flask
+```
+
+```bash
+pip install flask flask_login
+```
+
+```bash
 pip install flask flask_sqlalchemy
 ```
 
