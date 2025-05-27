@@ -77,7 +77,6 @@ projeto_pizza/
 
 ##  Observações
 
-- As páginas de login e registro existem mas ainda não estão funcionais.
 - O banco de dados é criado automaticamente ao iniciar o app.
 - Ideal para fins didáticos ou para expandir funcionalidades futuras (API, autenticação, etc).
 
