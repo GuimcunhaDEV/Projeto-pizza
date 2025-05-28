@@ -5,7 +5,7 @@ import os
 from functools import wraps
 
 app = Flask(__name__)
-app.secret_key = 'secure_key'  # troque para algo seguro
+app.secret_key = 'secure_key'
 
 # Configuração do banco de dados SQLite
 basedir = os.path.abspath(os.path.dirname(__file__))

@@ -25,6 +25,7 @@
                 <option value="Calabresa" {% if pedido.sabor == 'Calabresa' %}selected{% endif %}>Calabresa</option>
                 <option value="Quatro Queijos" {% if pedido.sabor == 'Quatro Queijos' %}selected{% endif %}>Quatro Queijos</option>
                 <option value="Frango com Catupiry" {% if pedido.sabor == 'Frango com Catupiry' %}selected{% endif %}>Frango com Catupiry</option>
+                <option value="SLA" {% if pedido.sabor == 'SLA' %}selected{% endif %}>SLA</option>
             </select>
             <button type="submit">Salvar</button>
             <a href="{{ url_for('index') }}">Cancelar</a>
