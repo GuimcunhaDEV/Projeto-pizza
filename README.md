@@ -3,7 +3,7 @@
 
 ##  Descrição do Projeto
 
-Este projeto é um sistema web simples desenvolvido com Flask para gerenciamento de pedidos de pizza. Ele permite adicionar, listar, editar e remover pedidos de clientes, com armazenamento em banco de dados SQLite.
+Este projeto consiste no desenvolvimento de um sistema web simples, implementado com o framework Flask, destinado ao gerenciamento de pedidos de pizza. A aplicação possibilita a realização das principais operações de CRUD (Create, Read, Update, Delete), permitindo que o usuário adicione, visualize, edite e exclua pedidos realizados por clientes. Para o armazenamento dos dados, utiliza-se um banco de dados relacional SQLite, proporcionando uma solução leve e eficaz para o controle das informações.
 
 ---
 
@@ -12,13 +12,20 @@ Este projeto é um sistema web simples desenvolvido com Flask para gerenciamento
 ### Pré-requisitos
 
 - Python 3 instalado
-- Bibliotecas Flask e SQLAlchemy
 
 ### Instalação
 
 1. Clone ou baixe este repositório.
 2. Acesse a pasta do projeto no terminal.
 3. Instale os requisitos:
+
+```bash
+pip install flask
+```
+
+```bash
+pip install flask flask_login
+```
 
 ```bash
 pip install flask flask_sqlalchemy
@@ -70,7 +77,6 @@ projeto_pizza/
 
 ##  Observações
 
-- As páginas de login e registro existem mas ainda não estão funcionais.
 - O banco de dados é criado automaticamente ao iniciar o app.
 - Ideal para fins didáticos ou para expandir funcionalidades futuras (API, autenticação, etc).
 
